@@ -1,0 +1,17 @@
+.env
+.env.*
+!.env.example
+
+backend/.env
+frontend/.env
+
+node_modules/
+dist/
+build/
+.next/
+
+.emergent/
+
+__pycache__/
+*.pyc
+memory/test_credentials.md

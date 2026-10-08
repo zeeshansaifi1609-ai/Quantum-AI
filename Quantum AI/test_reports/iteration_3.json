@@ -1,0 +1,29 @@
+{
+  "summary": "Step 3 (real AI providers + image gen + attachments) fully verified end-to-end. Backend pytest: 8/8 pass (streaming for chatgpt/gemini/claude returns real tokens, image gen produces real image served via /api/files, upload validates extensions and requires auth, perplexity provider rejected 400, guest can chat). Frontend playwright: login -> ChatGPT streams a real answer with typing cursor (not canned); multi-turn context works (follow-up 'which fruit did you just mention?' -> 'Pineapples.'); Gemini + Claude also produce real answers via model selector; Copy + Regenerate buttons visible on last assistant msg; model selector shows chatgpt/gemini/claude/image as Connected and quantum as Coming soon; Perplexity is NOT present anywhere in the UI/DOM; conversation persists across page reload; image mode indicator appears (purple), Nano Banana generated a real 1408px image which rendered via /api/files/quantum-ai/generated/...; attachment chips (note.txt + blue.png) shown in composer and in user message; ChatGPT correctly read the .txt content and returned 'BANANA-42'; uploading .exe triggers 'Unsupported file type.' toast; guest login on mobile 390x844 can chat with ChatGPT and gets real response 'OK'. No console errors beyond the expected 400 for the bad-extension upload test.",
+  "backend_issues": {"critical": [], "minor": []},
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [],
+    "design_issues": []
+  },
+  "test_report_links": [
+    "/app/backend/tests/test_ai_providers.py",
+    "/app/test_reports/pytest/pytest_ai_providers.xml"
+  ],
+  "action_items": [],
+  "critical_code_review_comments": [
+    "Regenerate button (Message.js) currently just re-sends the same user prompt (creating a new user+assistant pair) instead of replacing the last assistant message. Functionally acceptable, but produces duplicate user messages in history — consider replacing the trailing assistant message in place rather than appending a new turn.",
+    "server.py _build_image_contents silently swallows storage fetch errors (except pass). If an attachment image can't be fetched, the model won't see it but the user won't know — consider logging a warning and surfacing to client.",
+    "server.py /api/chat/stream persists messages only after the stream finishes; if the client disconnects mid-stream the partial assistant response is lost. Acceptable for MVP but worth noting.",
+    "ChatContext.sendMessage: `provider = model === 'image' ? 'chatgpt' : model` — safe fallback, but if user manually picks 'image' as model without imageMode toggle there's coupling to keep in mind.",
+    "server.py serve_file requires auth but does not check ownership (any authenticated user can fetch any /api/files/<path> if they know the exact opaque path). Paths are UUID-based so collision risk is low, but if strict access control is needed later, verify record.user_id == current_user."
+  ],
+  "updated_files": ["/app/backend/tests/test_ai_providers.py"],
+  "success_rate": {"backend": "100% (8/8)", "frontend": "100%"},
+  "test_credentials": "test1@example.com / Testpass123 (verified); guest via Continue as Guest (verified). Admin not re-tested this iteration.",
+  "seed_data_creation": "Created ~7 test conversations under test1@example.com and 1 under a fresh guest during E2E flows. Backend pytest creates and deletes its own conversations.",
+  "retest_needed": false,
+  "main_agent_can_self_test": true,
+  "context_for_next_testing_agent": "Step 3 is fully working: real streaming for chatgpt/gemini/claude via EMERGENT_LLM_KEY, image gen via Nano Banana (gemini-3.1-flash-image-preview), attachments (txt/png confirmed) with the assistant reading txt content, upload validation, and guest support. Perplexity is fully removed. Data-testids used: model-selector-button, model-option-<id>, chat-composer-input, chat-send-button, composer-attach-button, composer-file-input, composer-attachments, composer-image-toggle, image-mode-indicator, message-user, message-assistant, generated-image, copy-button, regenerate-button, new-chat-button, conversation-item-<id>. When testing streaming, allow up to 30-45s per response and detect completion by absence of `.animate-pulse-glow` element.",
+  "rca of the issue": "No blocking issues found."
+}

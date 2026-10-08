@@ -1,0 +1,35 @@
+{
+  "summary": "Full e2e testing of Quantum AI Step-1 auth completed. 9/10 backend tests pass; 13/14 frontend flows pass. One critical bug: POST /api/auth/guest returns 500 on the 2nd+ guest creation because the users.email unique index is declared 'sparse' but each guest is inserted with email=null (sparse indexes still index null values in MongoDB; only missing fields are excluded). First guest works, subsequent guests fail. Frontend shows 'Something went wrong. Please try again.' when clicking Continue as Guest.",
+  "backend_issues": {
+    "critical": [
+      {"endpoint": "POST /api/auth/guest", "issue": "DuplicateKeyError on users.email_1 (null) - 2nd+ guest creation returns 500. Root cause: db.users.create_index('email', unique=True, sparse=True) treats null as an indexed value. Fix: use a partialFilterExpression ({email: {$type: 'string'}}) instead of sparse=True, OR do not set email field for guest users (omit key entirely). Confirmed reproducible via /api/auth/guest twice in a row and via frontend guest button.", "priority": "CRITICAL"}
+    ],
+    "minor": []
+  },
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [
+      {"flow": "Continue as Guest", "issue": "Backend 500 causes generic 'Something went wrong. Please try again.' toast on click. Blocked by backend guest bug above.", "affected_selectors": ["login-guest-button", "auth-error-alert"]}
+    ],
+    "design_issues": []
+  },
+  "test_report_links": ["/app/backend/tests/test_auth.py", "/app/test_reports/pytest/pytest_results.xml"],
+  "action_items": [
+    "Fix users email unique index to use partialFilterExpression so multiple guest users with null email are allowed. Example: await db.users.create_index('email', unique=True, partialFilterExpression={'email': {'$type': 'string'}}). Note: existing 'sparse' index must be dropped first (db.users.drop_index('email_1')).",
+    "Alternatively, omit the 'email' key entirely for guest users instead of setting it to None."
+  ],
+  "critical_code_review_comments": [
+    "server.py line 348: sparse=True does not exclude explicit null values in MongoDB - use partialFilterExpression for correct behavior with guest users.",
+    "server.py: seed_admin default ADMIN_PASSWORD='admin123' is a weak fallback and would be used if env var missing - consider requiring the env var.",
+    "server.py: CORS allow_origins is parsed from env; if CORS_ORIGINS is unset, list is empty and browser requests would fail - works currently but is fragile.",
+    "Login lockout uses ip:identifier key - fine but IP is derived from request.client which may be behind proxy; consider X-Forwarded-For handling in production."
+  ],
+  "updated_files": ["/app/backend/tests/test_auth.py"],
+  "success_rate": {"backend": "90%", "frontend": "93%"},
+  "test_credentials": "Admin admin@quantumai.app / Quantum@Admin2026 (verified working). Test users created dynamically with unique emails.",
+  "seed_data_creation": "Multiple TEST_-prefixed and e2e_ users created in users collection during tests (not cleaned up - safe to prune later).",
+  "retest_needed": true,
+  "main_agent_can_self_test": true,
+  "context_for_next_testing_agent": "After fixing the sparse->partialFilterExpression index issue on users.email, drop the old index in Mongo and restart backend. Then retest POST /api/auth/guest twice + frontend Continue-as-Guest flow (expect badge 'Guest session' and locked-features notice). All other 13 frontend flows and 9 backend tests already pass.",
+  "rca of the issue": "MongoDB sparse indexes only skip documents that are missing the indexed field; documents where the field exists with value null are still indexed, and since email is unique, inserting a second guest user with email=null triggers E11000 DuplicateKeyError. Reproduction: POST /api/auth/guest returns 200 first time (or after prior null-email doc is absent); a subsequent call returns 500. Mitigation: recreate the index as partial with partialFilterExpression={'email': {'$type':'string'}} or unset email for guests."
+}

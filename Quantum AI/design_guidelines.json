@@ -1,0 +1,118 @@
+{
+  "project_name": "Quantum AI - Step 1: Authentication System",
+  "archetype": "ELECTRIC & NEON meets TACTICAL MINIMALISM (Futuristic AI Portal)",
+  "theme_mode": "dark",
+  "emotional_tone": "Cinematic, hyper-intelligent, secure, visionary, fluid quantum technology",
+  "context_type": "saas_auth_platform",
+  "fonts": {
+    "heading": "Outfit, Clash Display, -apple-system, BlinkMacSystemFont, sans-serif",
+    "body": "IBM Plex Sans, Inter, -apple-system, BlinkMacSystemFont, sans-serif",
+    "mono": "JetBrains Mono, Roboto Mono, monospace",
+    "instructions": "Import Google Fonts Outfit:wght@400;500;600;700;800 and IBM Plex Sans:wght@400;500;600 in index.html or index.css. Never use Inter for main headings."
+  },
+  "colors": {
+    "background_deep": "#05070E",
+    "background_card": "rgba(10, 15, 29, 0.75)",
+    "background_input": "rgba(15, 23, 42, 0.7)",
+    "border_glow": "rgba(6, 182, 212, 0.25)",
+    "border_subtle": "rgba(255, 255, 255, 0.08)",
+    "neon_cyan": "#00F0FF",
+    "electric_blue": "#2563EB",
+    "hologram_purple": "#A855F7",
+    "quantum_violet": "#7C3AED",
+    "amber_warning": "#F59E0B",
+    "emerald_success": "#10B981",
+    "rose_destructive": "#F43F5E",
+    "text_primary": "#F8FAFC",
+    "text_secondary": "#94A3B8",
+    "text_muted": "#64748B"
+  },
+  "logo_specification": {
+    "description": "User-specified 3D swirling vortex / spiral quantum orb in electric blue, cyan and purple neon on dark/transparent background.",
+    "svg_or_interactive_canvas": "Include an animated swirling SVG / CSS 3D vortex orb component alongside real curated backdrop images for the brand badge and hero visual."
+  },
+  "curated_media": {
+    "hero_vortex_orb": "https://images.unsplash.com/photo-1719671749913-684a8752e16b?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA4Mzl8MHwxfHNlYXJjaHwzfHxxdWFudHVtJTIwc3BpcmFsJTIwb3JiJTIwbmVvbnxlbnwwfHx8fDE3OTA0MDgxNDd8MA&ixlib=rb-4.1.0&q=85",
+    "quantum_nebula_portal": "https://images.unsplash.com/photo-1679615845580-8691c78fd7d3?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NTYxOTB8MHwxfHNlYXJjaHw0fHxkZWVwJTIwc3BhY2UlMjBzdGFycnklMjBnYWxheHklMjBuZWJ1bGF8ZW58MHx8fHwxNzkwNDA4MTU1fDA&ixlib=rb-4.1.0&q=85",
+    "abstract_quantum_core": "https://images.unsplash.com/photo-1490049350474-498de43bc885?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA4Mzl8MHwxfHNlYXJjaHwxfHxxdWFudHVtJTIwc3BpcmFsJTIwb3JiJTIwbmVvbnxlbnwwfHx8fDE3OTA0MDgxNDd8MA&ixlib=rb-4.1.0&q=85",
+    "deep_space_stars": "https://images.unsplash.com/photo-1464802686167-b939a6910659?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NTYxOTB8MHwxfHNlYXJjaHwxfHxkZWVwJTIwc3BhY2UlMjBzdGFycnklMjBnYWxheHklMjBuZWJ1bGF8ZW58MHx8fHwxNzkwNDA4MTU1fDA&ixlib=rb-4.1.0&q=85"
+  },
+  "layout_and_grid": {
+    "hero_auth_split": "On lg screens: 12-column asymmetric split grid. Left 5-6 cols dedicated to the Quantum AI Interactive Brand Showcase (glowing 3D vortex logo, real-time quantum cluster telemetry, encryption badge, quotes/feature teasers), Right 6-7 cols dedicated to the active Glassmorphic Auth Card (Login, Sign-up, or Guest handoff). On mobile: stacked with compact glowing brand header.",
+    "max_width": "max-w-7xl mx-auto px-4 sm:px-6 lg:px-8",
+    "padding_scale": "p-6 sm:p-8 lg:p-10 inside cards to avoid text collision with glowing borders"
+  },
+  "visual_enhancers": {
+    "glassmorphism": "backdrop-blur-2xl bg-slate-950/70 border border-cyan-500/20 shadow-[0_0_50px_-10px_rgba(0,240,255,0.15)]",
+    "tracing_beam_or_neon_rim": "Top accent gradient border: h-[1px] w-full bg-gradient-to-r from-transparent via-cyan-400 to-purple-500",
+    "mesh_background": "Radial cyan and purple gradient flares at coordinates (top left and bottom right) with subtle star particles canvas or CSS grid scanline overlay",
+    "password_strength_indicator": "4-segment reactive neon meter (Weak: Rose-500, Fair: Amber-500, Good: Cyan-400, Quantum-grade: Emerald-400 + Purple glow)",
+    "button_styling": "Primary: rounded-xl font-medium tracking-wide bg-gradient-to-r from-cyan-500 via-blue-600 to-purple-600 text-white shadow-[0_0_25px_rgba(6,182,212,0.4)] hover:shadow-[0_0_35px_rgba(168,85,247,0.6)] hover:brightness-110 active:scale-[0.98] transition-all duration-200. Secondary: rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 text-slate-200"
+  },
+  "components_structure": {
+    "QuantumLogo": {
+      "path": "/app/frontend/src/components/QuantumLogo.js",
+      "description": "Custom swirling 3D vortex SVG with cyan/purple concentric energetic rings and core orb pulse."
+    },
+    "AuthLayout": {
+      "path": "/app/frontend/src/components/AuthLayout.js",
+      "description": "Split screen layout with starfield canvas, glowing mesh backdrop, brand showcase, and responsive glass container."
+    },
+    "LoginForm": {
+      "path": "/app/frontend/src/components/LoginForm.js",
+      "description": "Email or Username field, password with toggle show/hide, remember me checkbox, Google OAuth mock/ready trigger, Guest mode link, login action button."
+    },
+    "SignUpForm": {
+      "path": "/app/frontend/src/components/SignUpForm.js",
+      "description": "Display name, email, password with live strength evaluation, confirm password match verification, terms acknowledgment, Google sign-up, submit button."
+    },
+    "PasswordStrengthMeter": {
+      "path": "/app/frontend/src/components/PasswordStrengthMeter.js",
+      "description": "Visual bar with 4 quantum power tiers and dynamic security feedback labels."
+    },
+    "GuestBanner": {
+      "path": "/app/frontend/src/components/GuestBanner.js",
+      "description": "High-prominence 'Continue as Guest' trigger with explanation of temporary quantum session."
+    },
+    "AuthenticatedHome": {
+      "path": "/app/frontend/src/components/AuthenticatedHome.js",
+      "description": "Step 1 verification landing: displays logged-in user profile or guest badge, session token metadata, secure logout button, and next-step roadmap."
+    }
+  },
+  "test_attributes": {
+    "convention": "Strict kebab-case role-based data-testid on every interactive control and status element",
+    "mandatory_ids": [
+      "login-tab-button",
+      "signup-tab-button",
+      "login-email-input",
+      "login-password-input",
+      "login-password-toggle",
+      "login-remember-checkbox",
+      "login-submit-button",
+      "login-guest-button",
+      "login-google-button",
+      "signup-name-input",
+      "signup-email-input",
+      "signup-password-input",
+      "signup-password-toggle",
+      "signup-confirm-password-input",
+      "signup-strength-meter",
+      "signup-submit-button",
+      "signup-google-button",
+      "auth-error-alert",
+      "auth-success-alert",
+      "user-profile-badge",
+      "user-session-type",
+      "logout-button"
+    ]
+  },
+  "UNIVERSAL_GUIDELINES_FOR_MAIN_AGENT": [
+    "Never use generic centered layouts with flat cards. Use glassmorphic layered surfaces with subtle glowing neon borders.",
+    "Never use pure black #000000; use deep galactic navy #05070E with ambient cyan/purple flares.",
+    "Do NOT use universal transition 'transition: all' because it breaks framer-motion and transforms. Specify 'transition-colors transition-opacity transition-shadow'.",
+    "Ensure all text meets WCAG AA contrast against dark backgrounds. Inputs must have clear focus rings.",
+    "All form inputs and buttons MUST include the exact data-testid attributes outlined in design_guidelines.json.",
+    "Use 'sonner' for toasts; configure it with dark theme and rich colors.",
+    "Keep 'Quantum AI' branding consistent everywhere."
+  ]
+}
